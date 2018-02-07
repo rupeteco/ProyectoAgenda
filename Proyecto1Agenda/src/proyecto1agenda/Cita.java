@@ -1,4 +1,4 @@
-package ejercicioagenda;
+package proyecto1agenda;
 
 public class Cita {
     private int hora;
@@ -21,9 +21,11 @@ public class Cita {
     
     public String leerCita(){
         StringBuilder st = new StringBuilder();
-        st.append("").append(this.getHora()).append(":").append(this.getMinutos())).
-        .append(" - ");
-        st.append(this.getTitulo())
+        st.append("").append(this.getHora()).append(":").append(this.getMinutos()).append(" - ");
+        st.append(this.getTitulo()).append("\n");
+        st.append(this.getTexto()).append("\n\n");
+        
+        return st.toString();
     }
 
     public int getHora() {
@@ -56,7 +58,5 @@ public class Cita {
 
     public void setTexto(String texto) {
         this.texto = texto;
-    }
-    
-    
+    }  
 }
