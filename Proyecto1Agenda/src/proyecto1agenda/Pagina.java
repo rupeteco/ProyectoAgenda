@@ -9,6 +9,7 @@ public class Pagina {
     private ArrayList<Cita> cita = new ArrayList();
     
     //constructor
+    Pagina (){}
     
     Pagina(int dia, int mes){
         this.dia = dia;
