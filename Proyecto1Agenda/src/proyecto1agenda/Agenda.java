@@ -7,6 +7,8 @@ private Pagina[] paginas;
 public Pagina abierta;
     
 //constructor    
+
+Agenda (){}
       
 Agenda (int anyo) {
      this.anyo = anyo;

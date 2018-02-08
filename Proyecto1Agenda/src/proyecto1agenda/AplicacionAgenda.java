@@ -41,12 +41,13 @@ public class AplicacionAgenda {
         System.out.println("fecha" + fecha);
         int opcion;
         */
-            System.out.println("Introduce en año de la nueva agenda:");
+            System.out.println("Introduce el año de la nueva agenda:");
                 anyo = teclado.nextInt();
                 
                 agenda = new Agenda (anyo);
                 
-            System.out.println("\n\n" + "*********CITA" + agenda.getAnyo() + "*********");
+            System.out.println("\n" + "*********CITA" + " " + agenda.getAnyo() + "********* \n");//la \n significa intro, pasa a otra linea
+            
         do {
                 mostrarMenu();
                 
@@ -64,7 +65,7 @@ public class AplicacionAgenda {
                         
                         actual = agenda.buscarPagina (dia, mes);
                         //agenda.abierta = agenda.buscarPagina(dia, mes);
-                        System.out.println("La pagina seleccionada" + actual.getDia()+ "dia del mes" + actual.getMes());
+                        System.out.println("La pagina seleccionada es el dia " + actual.getDia() + " del mes" + " " + actual.getMes());
                         break;
                         
                     case 2:
@@ -83,6 +84,7 @@ public class AplicacionAgenda {
                         
                         teclado.nextLine();//limpiar buffer
                         cita = new Cita (hora, minutos, titulo, texto);
+                        
                         actual.añadirCita(cita);
                         actual.leerPagina();
                         

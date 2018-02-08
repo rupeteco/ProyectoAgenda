@@ -6,8 +6,8 @@ public class Pagina {
     
     private int dia;
     private int mes;
-    private ArrayList<Cita> cita = new ArrayList();
-    
+    private ArrayList<Cita> cita = new ArrayList <>();
+        
     //constructor
     Pagina (){}
     
@@ -60,7 +60,7 @@ public class Pagina {
         
         /* de otra forma
         for (Cita temp: this.citas){
-            if (temp.getHora() == c.getHora() && temp.getMinustos() == c.getMinutos(){
+            if (temp.getHora() == c.getHora() && temp.getMinutos() == c.getMinutos(){
                 return temp;
             }
         }
