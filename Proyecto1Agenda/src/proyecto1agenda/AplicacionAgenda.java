@@ -17,9 +17,7 @@ public class AplicacionAgenda {
         Pagina actual = new Pagina ();
         Cita cita;
         int hora, minutos, segundos, dia, mes, anyo;
-        String texto, titulo;
-        
-        
+        String texto, titulo; 
         
         /*  EJEMPLO DE CALENDAR
         Calendar ahoraCal = Calendar.getInstance();// extraer la fecha getInstance
@@ -57,15 +55,29 @@ public class AplicacionAgenda {
                 switch (opcion){
                     case 1:
                         //añadir los metodos para validar que los dias y el mes son correctos
+                       
                         System.out.println("Introduce el dia:");
                         dia = teclado.nextInt();
-                        
+                       
                         System.out.println("Introduce mes:");
                         mes = teclado.nextInt();
                         
                         actual = agenda.buscarPagina (dia, mes);
                         //agenda.abierta = agenda.buscarPagina(dia, mes);
+                        
+                        if (comprobarFecha(dia,mes) == true){
+                            System.out.println("*****************************************");
+                            System.out.println("EL DIA Y EL MES INTRODUCIDO ES CORRECTO");
+                            System.out.println("*****************************************");
+                        } else {
+                            System.out.println("*****************************************");
+                            System.out.println("EL DIA Y EL MES INTRODUCIDO ES INCORRECTO");
+                            System.out.println("*****************************************");
+                          }
+                        
                         System.out.println("La pagina seleccionada es el dia " + actual.getDia() + " del mes" + " " + actual.getMes());
+                        
+                        
                         break;
                         
                     case 2:
@@ -76,13 +88,14 @@ public class AplicacionAgenda {
                         System.out.println("Introduce los minutos");
                         minutos = teclado.nextInt();
                         
+                        teclado.nextLine();//limpiar buffer
                         System.out.println("Introduce Titulo:");
                         titulo = teclado.nextLine();
                        
                         System.out.println("Introduce Texto:");
                         texto = teclado.nextLine();
                         
-                        teclado.nextLine();//limpiar buffer
+                       // teclado.nextLine();//limpiar buffer
                         cita = new Cita (hora, minutos, titulo, texto);
                         
                         actual.añadirCita(cita);
@@ -96,13 +109,17 @@ public class AplicacionAgenda {
                     case 4:
                         break;
                         
+                    case 5:
+                        System.out.println("Salir");
+                        break;
+                        
                     default:
                         System.out.println("Has elegido una opción ERRONEA");
                         break;                
                 }// llave switch
         }while (opcion != 4);
         
-    }//llave clase
+    }//llave main
     
     //metodos
     
@@ -113,4 +130,14 @@ public class AplicacionAgenda {
         System.out.println("4.- Modificar el texto de una cita");
         System.out.println("5.- Salir");
     }
+    
+    public static boolean comprobarFecha (int dia, int mes){
+         boolean fecha = false;
+        if (mes >= 1 && mes <= 12){
+            if (dia >= 1 && dia <= 31 )
+               return true;
+            }
+        return true;
+    }
+ 
 }//llave clase aplicacion agenda

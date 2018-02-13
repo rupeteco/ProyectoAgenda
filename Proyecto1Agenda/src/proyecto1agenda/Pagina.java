@@ -65,7 +65,26 @@ public class Pagina {
             }
         }
         return null;
+        
         */
+    }
+    
+    public int diaCorrecto (int dia){
+        for (int i=0;i<cita.size();i++){
+            if (cita.get(i).equals(dia)){
+             return i;   
+            }
+        }
+        return -1;
+    }
+    
+    public int mesCorrecto (int mes){
+        for (int i=0;i<cita.size();i++){
+            if (cita.get(i).equals(mes)){
+             return i;   
+            }
+        }
+        return -1;
     }
 
     public int getDia() {
