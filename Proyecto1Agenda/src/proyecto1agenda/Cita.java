@@ -6,11 +6,11 @@ public class Cita {
     private String titulo;
     private String texto;
     
-    //constructur
+    //constructur sin variables y con variables
     
     Cita (){}
 
-    public Cita(int hora, int minutos, String titulo, String texto) {
+    public Cita (int hora, int minutos, String titulo, String texto) {
         this.hora = hora;
         this.minutos = minutos;
         this.titulo = titulo;
@@ -19,11 +19,18 @@ public class Cita {
    
     //metodos
     
+    //sobreescribir el sout (imprimir por pantalla la cita) con poner la variable "cita" o "C" da igual nombre variable
+    @Override
+    public String toString (){
+        return "Titulo: " + this.getTitulo() + " Texto: " + this.getTexto()+
+        " Hora: " + this.getHora() + this.getMinutos();
+    }
+    
     public String leerCita(){
         StringBuilder st = new StringBuilder();
         st.append("").append(this.getHora()).append(":").append(this.getMinutos()).append(" - ");
         st.append(this.getTitulo()).append("\n");
-        st.append(this.getTexto()).append("\n\n");
+        st.append(this.getTexto());
         
         return st.toString();
     }

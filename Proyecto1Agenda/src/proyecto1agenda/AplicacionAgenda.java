@@ -15,9 +15,10 @@ public class AplicacionAgenda {
         Agenda agenda = null;
         Pagina pagina = null;
         Pagina actual = new Pagina ();
-        Cita cita;
+        Cita citas, citas1;
         int hora, minutos, segundos, dia, mes, anyo;
-        String texto, titulo; 
+        String texto, titulo, cita; 
+        
         
         /*  EJEMPLO DE CALENDAR
         Calendar ahoraCal = Calendar.getInstance();// extraer la fecha getInstance
@@ -55,7 +56,8 @@ public class AplicacionAgenda {
                 switch (opcion){
                     case 1:
                         //añadir los metodos para validar que los dias y el mes son correctos
-                       
+                       do{
+                           
                         System.out.println("Introduce el dia:");
                         dia = teclado.nextInt();
                        
@@ -63,53 +65,211 @@ public class AplicacionAgenda {
                         mes = teclado.nextInt();
                         
                         actual = agenda.buscarPagina (dia, mes);
-                        //agenda.abierta = agenda.buscarPagina(dia, mes);
+                        //agenda.abierta = agenda.buscarPagina(dia, mes); es lo mismo que lo de arriba 
                         
+                        //VAMOS A VALIDAR QUE EL DIA Y EL MES SON CORRECTOS ESTAN COMPRENDIDOS ENTRE LOS DIAS 1 Y 31 Y LOS MESES 1 Y 12
                         if (comprobarFecha(dia,mes) == true){
                             System.out.println("*****************************************");
                             System.out.println("EL DIA Y EL MES INTRODUCIDO ES CORRECTO");
                             System.out.println("*****************************************");
+                            
+                            System.out.println("*******************************************");
+                            System.out.println("La página seleccionada es el dia " + actual.getDia() + " del mes " + actual.getMes());
+                            System.out.println("*******************************************");
                         } else {
                             System.out.println("*****************************************");
                             System.out.println("EL DIA Y EL MES INTRODUCIDO ES INCORRECTO");
                             System.out.println("*****************************************");
-                          }
-                        
-                        System.out.println("La pagina seleccionada es el dia " + actual.getDia() + " del mes" + " " + actual.getMes());
-                        
-                        
+                          } 
+                       } while (!comprobarFecha (dia,mes));
                         break;
                         
                     case 2:
                         //falta introducir los metodos de validacion de la hora y los minutos
-                        System.out.println("Introduce la hora:");
-                        hora = teclado.nextInt();
+                        do {
+                            System.out.println("Introduce la hora:");
+                            hora = teclado.nextInt();
                         
-                        System.out.println("Introduce los minutos");
-                        minutos = teclado.nextInt();
+                            System.out.println("Introduce los minutos");
+                            minutos = teclado.nextInt();
                         
-                        teclado.nextLine();//limpiar buffer
-                        System.out.println("Introduce Titulo:");
-                        titulo = teclado.nextLine();
+                            //COMPROBAMOS QUE LA HORA Y LOS MINUTOS SON CORRECTOS
+                            if (comprobarHora(hora, minutos)) {
+                                System.out.println("La hora es correcta");
+                            } else {
+                                System.out.println("La hora es incorrecta");
+                              }
+                        } while (!comprobarHora(hora,minutos));
+                        
+                            teclado.nextLine();//limpiar buffer
+                            System.out.println("Introduce Titulo:");
+                            titulo = teclado.nextLine();
                        
-                        System.out.println("Introduce Texto:");
-                        texto = teclado.nextLine();
+                            System.out.println("Introduce Texto:");
+                            texto = teclado.nextLine();
                         
-                       // teclado.nextLine();//limpiar buffer
-                        cita = new Cita (hora, minutos, titulo, texto);
+                            citas = new Cita (hora, minutos, titulo, texto);
                         
-                        actual.añadirCita(cita);
-                        actual.leerPagina();
-                        
+                            if (actual.comprobarCita(hora, minutos)) {
+                                 System.out.println("La cita no se puede crear porque ya existe");
+                            } else {
+                                actual.añadirCita(citas);
+                                System.out.println("************************************");
+                                System.out.println("La cita se ha registrado con éxito: ");
+                                cita = citas.leerCita();
+                                System.out.println(cita);
+                                System.out.println("************************************"); 
+                               }
                         break;
                         
                     case 3:
+                        do {
+                            System.out.println("Introduce el dia de la cita a borrar");
+                            dia = teclado.nextInt();
+
+                            System.out.println("Introduce el mes de la cita a borrar");
+                            mes = teclado.nextInt();
+
+                            //COMPROBAR QUE EL DIA Y EL MES SEAN CORRECTOS
+                            if (comprobarFecha(dia, mes)) {
+                                System.out.println("Fecha correcta");
+                                agenda.abierta = agenda.buscarPagina(dia, mes);
+                                System.out.println("La página seleccionada es el dia " + agenda.abierta.getDia() + " del mes " + agenda.abierta.getMes());
+                            } else {
+                                System.out.println("Fecha incorrecta");
+                              }
+                        } while (!comprobarFecha(dia, mes));
+
+                        do {
+                            System.out.println("Introduce hora de la cita a borrar");
+                            hora = teclado.nextInt();
+
+                            System.out.println("Introduce minutos de la cita a borrar");
+                            minutos = teclado.nextInt();
+
+                            //COMPROBAR QUE LA HORA Y LOS MINUTOS SON CORRECTOS
+                            if (comprobarHora(hora, minutos)) {
+                                System.out.println("La hora es correcta");
+                            } else {
+                                System.out.println("La hora es incorrecta");
+                              }
+                        } while (!comprobarHora(hora, minutos));
+
+                        citas1 = agenda.abierta.buscarCita(hora, minutos);
+                        if (citas1 == null) {
+                            System.out.println("La cita no existe");
+                        } else {
+                            agenda.abierta.borrarCita(citas1);
+                            System.out.println("Cita encontrada");
+                            System.out.println("Cita borrada con éxito");
+                            System.out.println("Las citas restantes del día: ");
+                            agenda.abierta.leerPagina();
+                          }
                         break;
                         
                     case 4:
+                        do {
+                        System.out.println("Introduce dia");
+                        dia = teclado.nextInt();
+
+                        System.out.println("Introduce mes");
+                        mes = teclado.nextInt();
+
+                        //COMPROBAMOS DIA Y MES
+                        if (comprobarFecha(dia, mes)) {
+                            System.out.println("Fecha correcta");
+
+                            agenda.abierta = agenda.buscarPagina(dia, mes);
+                            System.out.println("La página seleccionada es el dia " + agenda.abierta.getDia() + " del mes " + agenda.abierta.getMes());
+                        } else {
+
+                            System.out.println("Fecha incorrecta");
+                        }
+                    } while (!comprobarFecha(dia, mes));
+
+                    do {
+                        System.out.println("Introduce hora");
+                        hora = teclado.nextInt();
+
+                        System.out.println("Introduce minutos");
+                        minutos = teclado.nextInt();
+
+                        //COMPROBAMOS HORA Y MINUTOS
+                        if (comprobarHora(hora, minutos)) {
+                            System.out.println("La hora es correcta");
+                        } else {
+                            System.out.println("La hora es incorrecta");
+                        }
+                    } while (!comprobarHora(hora, minutos));
+
+                    citas1 = agenda.abierta.buscarCita(hora, minutos);
+                    if (citas1 == null) {
+                        System.out.println("La cita no existe");
+                    } else {
+                        System.out.println("La cita que buscas es: ");
+                        cita = citas1.leerCita();
+                        System.out.println(cita);
+                    }
                         break;
                         
                     case 5:
+                        do {
+                        System.out.println("Introduce dia");
+                        dia = teclado.nextInt();
+
+                        System.out.println("Introduce mes");
+                        mes = teclado.nextInt();
+
+                        //COMPROBAMOS DIA Y MES
+                        if (comprobarFecha(dia, mes)) {
+                            System.out.println("Fecha correcta");
+
+                            agenda.abierta = agenda.buscarPagina(dia, mes);
+                            System.out.println("La página seleccionada es el dia " + agenda.abierta.getDia() + " del mes " + agenda.abierta.getMes());
+                        } else {
+
+                            System.out.println("Fecha incorrecta");
+                        }
+                    } while (!comprobarFecha(dia, mes));
+
+                    do {
+                        System.out.println("Introduce hora");
+                        hora = teclado.nextInt();
+
+                        System.out.println("Introduce minutos");
+                        minutos = teclado.nextInt();
+
+                        //COMPROBAMOS HORA Y MINUTOS
+                        if (comprobarHora(hora, minutos)) {
+                            System.out.println("La hora es correcta");
+                        } else {
+                            System.out.println("La hora es incorrecta");
+                        }
+                    } while (!comprobarHora(hora, minutos));
+
+                    citas1 = agenda.abierta.buscarCita(hora, minutos);
+                    
+                    if (citas1 == null) {
+                        System.out.println("La cita no existe");
+                    } else {
+                        System.out.println("Cita encontrada");
+                        cita= citas1.leerCita();
+                        System.out.println(cita);
+                        teclado.nextLine();
+                        System.out.println("Introduce el nuevo texto");
+                        texto = teclado.nextLine();
+                        agenda.abierta.modificarTexto(citas1, texto);
+                        System.out.println("Texto modificado con éxito");
+                        cita= citas1.leerCita();
+                        System.out.println(cita);
+                    }
+                        break;
+                    
+                    case 6:
+                          agenda.abierta.leerPagina();
+                          break;
+                        
+                    case 7:
                         System.out.println("Salir");
                         break;
                         
@@ -117,27 +277,101 @@ public class AplicacionAgenda {
                         System.out.println("Has elegido una opción ERRONEA");
                         break;                
                 }// llave switch
-        }while (opcion != 4);
+        }while (opcion != 7);
         
     }//llave main
     
     //metodos
     
     public static void mostrarMenu(){
-        System.out.println("1.-Añadir cita");
-        System.out.println("2.- Borrar cita");
-        System.out.println("3.- Buscar cita");
-        System.out.println("4.- Modificar el texto de una cita");
-        System.out.println("5.- Salir");
+        System.out.println("1.- Seleccionar el dia y mes");
+        System.out.println("2.- Añadir cita");
+        System.out.println("3.- Borrar cita");
+        System.out.println("4.- Buscar cita");
+        System.out.println("5.- Modificar el texto de una cita");
+        System.out.println("6.- Listar todas las citas");
+        System.out.println("7.- Salir");
     }
     
-    public static boolean comprobarFecha (int dia, int mes){
-         boolean fecha = false;
-        if (mes >= 1 && mes <= 12){
-            if (dia >= 1 && dia <= 31 )
-               return true;
+    public static boolean comprobarFecha (int dia, int mes) {
+
+        if (mes >= 1 && mes <= 12) {
+            switch (mes) {
+                case 1:
+                    if (dia >= 1 && dia <= 31) {
+                        return true;
+                    }
+                    break;
+                case 2:
+                    if (dia >= 1 && dia <= 30) {
+                        return true;
+                    }
+                    break;
+                case 3:
+                    if (dia >= 1 && dia <= 31) {
+                        return true;
+                    }
+                    break;
+                case 4:
+                    if (dia >= 1 && dia <= 30) {
+                        return true;
+                    }
+                    break;
+                case 5:
+                    if (dia >= 1 && dia <= 31) {
+                        return true;
+                    }
+                    break;
+                case 6:
+                    if (dia >= 1 && dia <= 30) {
+                        return true;
+                    }
+                    break;
+                case 7:
+                    if (dia >= 1 && dia <= 31) {
+                        return true;
+                    }
+                    break;
+                case 8:
+                    if (dia >= 1 && dia <= 31) {
+                        return true;
+                    }
+                    break;
+                case 9:
+                    if (dia >= 1 && dia <= 30) {
+                        return true;
+                    }
+                    break;
+                case 10:
+                    if (dia >= 1 && dia <= 31) {
+                        return true;
+                    }
+                    break;
+                case 11:
+                    if (dia >= 1 && dia <= 30) {
+                        return true;
+                    }
+                    break;
+                case 12:
+                    if (dia >= 1 && dia <= 31) {
+                        return true;
+                    }
+                    break;
+                default:
+                    return false;
             }
-        return true;
+        }
+        return false;
+    }
+    
+    public static boolean comprobarHora(int hora, int minutos) {
+
+        if (hora >= 0 && hora <= 24) {
+            if (minutos >= 0 && minutos <= 60) {
+                return true;
+            }
+        }
+        return false;
     }
  
 }//llave clase aplicacion agenda

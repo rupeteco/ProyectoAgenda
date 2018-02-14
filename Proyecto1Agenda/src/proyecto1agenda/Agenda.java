@@ -1,10 +1,9 @@
 package proyecto1agenda;
-//prueba modificacion dia 8/2/18
-public class Agenda {
-    
-private int anyo;
-private Pagina[] paginas;
-public Pagina abierta;
+
+public class Agenda {  
+        private int anyo;
+        private Pagina [] paginas = new Pagina [365];
+        public Pagina abierta;
     
 //constructor    
 
@@ -16,7 +15,6 @@ Agenda (int anyo) {
          inicializa(true);
      } else inicializa(false);
 }
-                //hola hola
     
 //metodos
     

@@ -6,7 +6,7 @@ public class Pagina {
     
     private int dia;
     private int mes;
-    private ArrayList<Cita> cita = new ArrayList <>();
+    private ArrayList<Cita> cita = new ArrayList ();
         
     //constructor
     Pagina (){}
@@ -69,24 +69,19 @@ public class Pagina {
         */
     }
     
-    public int diaCorrecto (int dia){
-        for (int i=0;i<cita.size();i++){
-            if (cita.get(i).equals(dia)){
-             return i;   
+     public boolean comprobarCita(int hora, int minutos) {
+        for (int i = 0; i < this.cita.size(); i++) {
+            if (this.cita.get(i).getHora() == hora && this.cita.get(i).getMinutos() == minutos) {
+                return true;
             }
         }
-        return -1;
+        return false;
+    }
+     
+    public void modificarTexto(Cita c1, String texto) {
+        c1.setTexto(texto);
     }
     
-    public int mesCorrecto (int mes){
-        for (int i=0;i<cita.size();i++){
-            if (cita.get(i).equals(mes)){
-             return i;   
-            }
-        }
-        return -1;
-    }
-
     public int getDia() {
         return dia;
     }
