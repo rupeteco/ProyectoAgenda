@@ -4,6 +4,7 @@ public class Agenda {
         private int anyo;
         private Pagina [] paginas = new Pagina [365];
         public Pagina abierta;
+       // public Pagina abierta; para utilizar la variable actual en la pagina principal
     
 //constructor    
 

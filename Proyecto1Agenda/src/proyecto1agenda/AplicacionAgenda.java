@@ -64,8 +64,8 @@ public class AplicacionAgenda {
                         System.out.println("Introduce mes:");
                         mes = teclado.nextInt();
                         
-                        actual = agenda.buscarPagina (dia, mes);
-                        //agenda.abierta = agenda.buscarPagina(dia, mes); es lo mismo que lo de arriba 
+                        //actual = agenda.buscarPagina (dia, mes); pero la tendriamos q declarar en agenda (Pagina actual)
+                        agenda.abierta = agenda.buscarPagina(dia, mes);// es lo mismo que lo de arriba 
                         
                         //VAMOS A VALIDAR QUE EL DIA Y EL MES SON CORRECTOS ESTAN COMPRENDIDOS ENTRE LOS DIAS 1 Y 31 Y LOS MESES 1 Y 12
                         if (comprobarFecha(dia,mes) == true){
@@ -73,9 +73,9 @@ public class AplicacionAgenda {
                             System.out.println("EL DIA Y EL MES INTRODUCIDO ES CORRECTO");
                             System.out.println("*****************************************");
                             
-                            System.out.println("*******************************************");
-                            System.out.println("La página seleccionada es el dia " + actual.getDia() + " del mes " + actual.getMes());
-                            System.out.println("*******************************************");
+                            System.out.println("************************************************");
+                            System.out.println("La página seleccionada es el dia " + agenda.abierta.getDia() + " del mes " + agenda.abierta.getMes());
+                            System.out.println("************************************************");
                         } else {
                             System.out.println("*****************************************");
                             System.out.println("EL DIA Y EL MES INTRODUCIDO ES INCORRECTO");
@@ -110,10 +110,10 @@ public class AplicacionAgenda {
                         
                             citas = new Cita (hora, minutos, titulo, texto);
                         
-                            if (actual.comprobarCita(hora, minutos)) {
+                            if (agenda.abierta.comprobarCita(hora, minutos)) {
                                  System.out.println("La cita no se puede crear porque ya existe");
                             } else {
-                                actual.añadirCita(citas);
+                                agenda.abierta.añadirCita(citas);
                                 System.out.println("************************************");
                                 System.out.println("La cita se ha registrado con éxito: ");
                                 cita = citas.leerCita();
@@ -162,8 +162,10 @@ public class AplicacionAgenda {
                             agenda.abierta.borrarCita(citas1);
                             System.out.println("Cita encontrada");
                             System.out.println("Cita borrada con éxito");
-                            System.out.println("Las citas restantes del día: ");
+                            System.out.println("*********************************");
+                            System.out.println("Las citas restantes del día son: ");
                             agenda.abierta.leerPagina();
+                            System.out.println("*********************************");
                           }
                         break;
                         
@@ -207,8 +209,10 @@ public class AplicacionAgenda {
                         System.out.println("La cita no existe");
                     } else {
                         System.out.println("La cita que buscas es: ");
+                        System.out.println("****************************");
                         cita = citas1.leerCita();
                         System.out.println(cita);
+                        System.out.println("****************************");
                     }
                         break;
                         
@@ -233,10 +237,10 @@ public class AplicacionAgenda {
                     } while (!comprobarFecha(dia, mes));
 
                     do {
-                        System.out.println("Introduce hora");
+                        System.out.println("Introduce hora:");
                         hora = teclado.nextInt();
 
-                        System.out.println("Introduce minutos");
+                        System.out.println("Introduce minutos:");
                         minutos = teclado.nextInt();
 
                         //COMPROBAMOS HORA Y MINUTOS
@@ -254,19 +258,25 @@ public class AplicacionAgenda {
                     } else {
                         System.out.println("Cita encontrada");
                         cita= citas1.leerCita();
+                        System.out.println("****************************");
                         System.out.println(cita);
+                        System.out.println("****************************");
                         teclado.nextLine();
-                        System.out.println("Introduce el nuevo texto");
+                        System.out.println("Introduce el nuevo texto:");
                         texto = teclado.nextLine();
                         agenda.abierta.modificarTexto(citas1, texto);
-                        System.out.println("Texto modificado con éxito");
+                        System.out.println("****************************");
+                        System.out.println("Texto modificado con éxito:");
                         cita= citas1.leerCita();
                         System.out.println(cita);
+                        System.out.println("****************************");
                     }
                         break;
                     
                     case 6:
+                          System.out.println("******************");
                           agenda.abierta.leerPagina();
+                          System.out.println("******************");
                           break;
                         
                     case 7:
